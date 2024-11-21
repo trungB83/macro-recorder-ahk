@@ -1,6 +1,5 @@
 #Persistent
 F3::
-
     Loop
     {
 
@@ -11,48 +10,43 @@ F3::
         WinWait, %tt%
         IfWinNotActive, %tt%,, WinActivate, %tt%
 
-            Sleep, 328
+            Sleep, 523
 
-        MouseClick, L, 959, 538
+        MouseClick, L, 959, 539
 
-        Sleep, 765
+        Sleep, 750
 
-        MouseMove, 1118, 785
-        MouseClick L
+        MouseClick, L, 1115, 775
 
-        Sleep, 1200
+        Sleep, 1601
 
-        MouseClick, L, 979, 415
+        MouseClick, L, 966, 404
 
-        Sleep, 2469
+        Sleep, 1461
 
-        mouseMove, 445, 415, 10
+        MouseClick, L, 360, 351
 
-        Sleep, 3000
+        Sleep, 3200
 
-        ; MouseClick, L, 303, 327
+        MouseClick, L, 365, 351
 
-        ; Sleep, 1406
+        Sleep, 1016
 
-        ; MouseClick, L, 442, 775
+        MouseClick, L, 412, 355
 
-        ; Sleep, 1179
+        Sleep, 875
 
-        ; MouseClick, L, 434, 766
+        MouseClick, L, 479, 789
 
-        ; Sleep, 1023
+        Sleep, 593
 
-        ; MouseClick, L, 1485, 875
+        MouseClick, L, 435, 777
 
-        ; Sleep, 2492
+        Sleep, 703
 
-        ; Send, {Blind}d
+        MouseClick, L, 1443, 873
 
-        ; Sleep, 750
-
-        ; Send, {Blind}a
-
-        ; Sleep, 1000
+        Sleep, 1000
 
     }
 

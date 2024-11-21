@@ -1,5 +1,25 @@
-#Requires AutoHotkey v2.0
+;===========================================================
 
+;  Macro Recorder v2.1  By TrungB83
+;
+;  Description: This script records the mouse
+;  and keyboard actions and then plays back.
+;
+;  F1  -->  Record(Screen) (CoordMode, Mouse, Screen)
+;  F2  -->  Record(Window) (CoordMode, Mouse, Window)
+;  F3  -->  Stop   Record/Play
+;  F4  -->  Play   LogFile
+;  F5  -->  Edit   LogFile
+;  F6  -->  Pause  Record/Play
+;
+;  Note:
+;  1. press the Ctrl button individually
+;     to record the movement of the mouse.
+;  2. Shake the mouse on the Pause button,
+;     you can pause recording or playback.
+;===========================================================
+
+; UI
 mainGui := Gui("+AlwaysOnTop +Resize")
 Tab := mainGui.Add("Tab2", "x0 y0 w409 h358", ["Run Macro", "Generate"])
 
@@ -30,55 +50,35 @@ global loopScript := false
 global stopRun := false
 return
 
-;========================Run macro============================
-SelectFile(*) {
-    global mouseSteps, fileList
-    selectedFile := FileSelect(3, , "Open a file", "Text Documents (*.txt)")
-    if (selectedFile) {
-        fileContent := FileRead(selectedFile)
-        mouseSteps := []
-        fileList.Delete()
-        for line in StrSplit(fileContent, "`n") {
-            if (line) {
-                fileList.Add("", line)
-                coords := StrSplit(line, ",")
-                mouseSteps.Push({ Index: Trim(coords[1]), X: +(Trim(coords[2])), Y: +(Trim(coords[3])), Delay: +(Trim(coords[4])) })
-            }
-        }
-    }
+;=================================Hotkey macro==========================
+
+F1:: {
+    Suspend
+    Record()
 }
 
-Discard(*) {
-    global fileList, mouseSteps
-    fileList.Delete()
-    mouseSteps := []
+
+F2:: {
+    Suspend
+    Record()
 }
 
-Start(*) {
-    global mouseSteps, loopScript, stopRun
-    stopRun := false
-    if (mouseSteps.Length > 0) {
-        Sleep(5000)
-        loop {
-            for step in mouseSteps {
-                UpdateStatusBar(step)
-                MouseMove(step.X, step.Y, 100)
-                Click
-                Sleep(step.Delay)
-                if (stopRun) {
-                    break
-                }
-            }
-            if (!loopScript) {
-                break
-            }
-        }
-    }
+Record() {
+    if (Recording or Playing)
+        return
+      Coord:=InStr(A_ThisLabel,"Win") ? "Window":"Screen"
+      LogArr:=[], oldid:="", Log(), Recording:=1, SetHotkey(1)
+      ShowTip("Recording")
+    return
 }
 
-UpdateStatusBar(value) {
-    global SB
-    SB.Text := "Current Mouse Position: " value.X ", " value.Y
+
+F4:: {
+    StopScript()
+}
+
+OnClose() {
+    ExitApp
 }
 
 ;=================================Generate macro==========================
@@ -142,10 +142,70 @@ stopScript(*) {
     stopRun := true
 }
 
-F4:: {
-    StopScript()
+Log(str:="", Keyboard:=0) {
+    global LogArr
+    static LastTime
+    t:=A_TickCount, Delay:=(LastTime ? t-LastTime:0), LastTime:=t
+    IfEqual, str,, return
+    i:=LogArr.MaxIndex(), r:=LogArr[i]
+    if (Keyboard and InStr(r,"Send,") and Delay<1000)
+    {
+      LogArr[i]:=r . str
+      return
+    }
+    if (Delay>200)
+      LogArr.Push("Sleep, " (Delay//2))
+    LogArr.Push(Keyboard ? "Send, {Blind}" str : str)
+  }
+
+;=================================Run macro==========================
+SelectFile(*) {
+    global mouseSteps, fileList
+    selectedFile := FileSelect(3, , "Open a file", "Text Documents (*.txt)")
+    if (selectedFile) {
+        fileContent := FileRead(selectedFile)
+        mouseSteps := []
+        fileList.Delete()
+        for line in StrSplit(fileContent, "`n") {
+            if (line) {
+                fileList.Add("", line)
+                coords := StrSplit(line, ",")
+                mouseSteps.Push({ Index: Trim(coords[1]), X: +(Trim(coords[2])), Y: +(Trim(coords[3])), Delay: +(Trim(coords[4])) })
+            }
+        }
+    }
 }
 
-OnClose() {
-    ExitApp
+Discard(*) {
+    global fileList, mouseSteps
+    fileList.Delete()
+    mouseSteps := []
 }
+
+Start(*) {
+    global mouseSteps, loopScript, stopRun
+    stopRun := false
+    if (mouseSteps.Length > 0) {
+        Sleep(5000)
+        loop {
+            for step in mouseSteps {
+                UpdateStatusBar(step)
+                MouseMove(step.X, step.Y, 100)
+                Click
+                Sleep(step.Delay)
+                if (stopRun) {
+                    break
+                }
+            }
+            if (!loopScript) {
+                break
+            }
+        }
+    }
+}
+
+UpdateStatusBar(value) {
+    global SB
+    SB.Text := "Current Mouse Position: " value.X ", " value.Y
+}
+
