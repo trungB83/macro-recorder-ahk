@@ -1,25 +1,3 @@
-;===========================================================
-
-;  Macro Recorder v2.1  By TrungB83
-;
-;  Description: This script records the mouse
-;  and keyboard actions and then plays back.
-;
-;  F1  -->  Record(Screen) (CoordMode, Mouse, Screen)
-;  F2  -->  Record(Window) (CoordMode, Mouse, Window)
-;  F3  -->  Stop   Record/Play
-;  F4  -->  Play   LogFile
-;  F5  -->  Edit   LogFile
-;  F6  -->  Pause  Record/Play
-;
-;  Note:
-;  1. press the Ctrl button individually
-;     to record the movement of the mouse.
-;  2. Shake the mouse on the Pause button,
-;     you can pause recording or playback.
-;===========================================================
-
-; UI
 mainGui := Gui("+AlwaysOnTop +Resize")
 Tab := mainGui.Add("Tab2", "x0 y0 w409 h358", ["Run Macro", "Generate"])
 
