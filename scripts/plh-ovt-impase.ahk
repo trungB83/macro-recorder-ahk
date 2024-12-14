@@ -14,25 +14,29 @@ F3::
 
         MouseClick, L, 960, 540
 
-        Sleep, 562
+        Sleep, 758
 
-        MouseClick, L, 1101, 776
+        MouseClick, L, 1169, 800
 
-        Sleep, 1211
+        Sleep, 1437
 
-        MouseClick, L, 966, 426
+        MouseClick, L, 981, 423
 
-        Sleep, 1398
+        Sleep, 1226
 
-        MouseClick, L, 957, 149
+        MouseClick, L, 982, 137
 
-        Sleep, 1601
+        Sleep, 1250
 
-        MouseClick, L, 1210, 456
+        MouseClick, L, 964, 524
 
-        Sleep, 1523
+        Sleep, 633
 
-        MouseClick, L, 1540, 875
+        MouseClick, L, 1150, 548
+
+        Sleep, 953
+
+        MouseClick, L, 1454, 873
 
         Sleep, 1000
 
