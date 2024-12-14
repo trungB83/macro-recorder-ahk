@@ -24,21 +24,9 @@ F3::
 
         Sleep, 1461
 
-        MouseClick, L, 360, 351
-
-        Sleep, 3200
-
         MouseClick, L, 365, 351
 
-        Sleep, 1016
-
-        MouseClick, L, 412, 355
-
-        Sleep, 875
-
-        MouseClick, L, 479, 789
-
-        Sleep, 593
+        Sleep, 5000
 
         MouseClick, L, 435, 777
 
