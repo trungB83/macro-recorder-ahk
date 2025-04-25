@@ -22,6 +22,9 @@ F3::
 
         MouseClick, L, 960, 540
         Sleep, 1000
+
+        Send, {Blind}{Enter}
+        Sleep, 1000
     }
 return
 
